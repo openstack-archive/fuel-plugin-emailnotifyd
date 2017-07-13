@@ -1,0 +1,66 @@
+- id: fp-emailnotifyd-hiera
+  role: "emailnotifyd"
+  type: puppet
+  version: 2.0.0
+  requires: [post_deployment_start]
+  required_for: ['fp-emailnotifyd-vip']
+  parameters:
+    puppet_manifest: "puppet/manifests/hiera_override.pp"
+    puppet_modules: puppet/modules:/etc/puppet/modules
+    timeout: 120
+  reexecute_on:
+    - deploy_changes
+- id: fp-emailnotifyd-hosts
+  role: "emailnotifyd"
+  type: puppet
+  version: 2.0.0
+  requires: [post_deployment_start]
+  required_for: ['fp-emailnotifyd-vip']
+  parameters:
+    puppet_manifest: "puppet/manifests/hosts.pp"
+    puppet_modules: puppet/modules:/etc/puppet/modules
+    timeout: 120
+  reexecute_on:
+    - deploy_changes
+- id: fp-emailnotifyd-install
+  role: "emailnotifyd"
+  type: puppet
+  version: 2.0.0
+  required_for: [post_deployment_end]
+  requires: [fp-emailnotifyd-hiera]
+  parameters:
+    puppet_manifest: "puppet/manifests/emailnotifyd.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
+    timeout: 1200
+- id: fp-emailnotifyd-wsgi-configure
+  role: "emailnotifyd"
+  type: puppet
+  version: 2.0.0
+  required_for: [post_deployment_end]
+  requires: [fp-emailnotifyd-hiera,fp-emailnotifyd-install]
+  parameters:
+    puppet_manifest: "puppet/manifests/wsgi_configure.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
+    timeout: 1200
+- id: fp-emailnotifyd-vip
+  role: "emailnotifyd"
+  type: puppet
+  version: 2.0.0
+  requires: [fp-emailnotifyd-install]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: "/etc/puppet/modules/osnailyfacter/modular/virtual_ips/virtual_ips.pp"
+    puppet_modules: /etc/puppet/modules
+    timeout: 3600
+- id: fp-emailnotifyd-haproxy
+  role: "emailnotifyd"
+  type: puppet
+  version: 2.0.0
+  requires: [fp-emailnotifyd-vip]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: "puppet/manifests/haproxy.pp"
+    puppet_modules: puppet/modules:/etc/puppet/modules
+    timeout: 120
+  reexecute_on:
+    - deploy_changes

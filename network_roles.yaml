@@ -1,0 +1,11 @@
+- id: 'emailnotifyd_public_vip'
+  default_mapping: 'public'
+  properties:
+    subnet: true
+    gateway: false
+    vip:
+       - name: 'vip__emailnotifyd'
+         namespace: 'haproxy'
+         alias: 'vip__emailnotifyd'
+         node_roles:
+           - 'emailnotifyd'

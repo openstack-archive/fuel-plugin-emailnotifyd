@@ -1,0 +1,10 @@
+emailnotifyd:
+  name: 'emailnotifyd'
+  description: 'Email notify service'
+  has_primary: false
+  public_ip_required: true
+  weight: 100
+  conflicts: []
+  update_required:
+    - emailnotifyd
+

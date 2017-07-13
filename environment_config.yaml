@@ -1,0 +1,62 @@
+attributes:
+  metadata:
+    label: "Install emailnotifyd"
+    weight: 12
+  emailnotifyd_vip:
+    type: "text"
+    weight: 13
+    value: "xx.xx.xx.xx"
+    label: "emailnotify vip"
+  emailnotifyd_port:
+    type: "text"
+    weight: 14
+    value: "80"
+    label: "emailnotify port"
+  subject:
+    type: "text"
+    weight: 20
+    value: "VM feels bad"
+    label: "Subject"
+  body:
+    type: "text"
+    weight: 21
+    value: "Alarm"
+    label: "Body"
+  host:
+    type: "text"
+    weight: 22
+    value: ""
+    label: "Host"
+  port:
+    type: "text"
+    weight: 23
+    value: "25"
+    label: "Smtp Port"
+  user:
+    type: "text"
+    weight: 24
+    value: ""
+    label: "User"
+  passwd:
+    type: "password"
+    weight: 25
+    value: ""
+    label: "Password"
+  from_addr:
+    type: "text"
+    weight: 26
+    value: "default@domain.com"
+    label: "From addr"
+  cc_checkbox:
+    type: "checkbox"
+    weight: 27
+    label: "(optional) CC address"
+    value: false
+  cc_addr:
+    type: "text"
+    weight: 28
+    value: ""
+    label: "CC addr"
+    restrictions:
+      - condition: "settings:fuel-plugin-emailnotifyd.cc_checkbox.value == false"
+        action: disable
