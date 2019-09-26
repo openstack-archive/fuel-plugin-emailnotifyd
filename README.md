@@ -1,3 +1,3 @@
-# emailnotifyd
-Plugin to install emailnotifyd component
+# This repo has moved to OpenDev
 
+It can now be found at [https://opendev.org/x/fuel-plugin-emailnotifyd](https://opendev.org/x/fuel-plugin-emailnotifyd)
